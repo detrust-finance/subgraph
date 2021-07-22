@@ -1,0 +1,32 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DeTrust
+    network: rinkeby
+    source:
+      address: "0xCeB885d669098cB6b78e70E01Ff9FE7d831F53B3"
+      abi: DeTrust
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TrustAdded
+        - TrustFinished
+        - TrustFundAdded
+        - TrustReleased
+      abis:
+        - name: DeTrust
+          file: ./abis/DeTrust.json
+      eventHandlers:
+        - event: TrustAdded(string,indexed address,indexed address,indexed uint256,uint256,uint256,uint256,uint256)
+          handler: handleTrustAdded
+        - event: TrustFinished(indexed uint256)
+          handler: handleTrustFinished
+        - event: TrustFundAdded(indexed uint256,uint256)
+          handler: handleTrustFundAdded
+        - event: TrustReleased(indexed uint256,indexed address,uint256)
+          handler: handleTrustReleased
+      file: ./src/mapping.ts
