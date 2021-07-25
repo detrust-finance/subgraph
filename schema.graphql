@@ -1,6 +1,11 @@
-type ExampleEntity @entity {
+type Trust @entity {
   id: ID!
-  count: BigInt!
   name: String! # string
   settlor: Bytes! # address
+  beneficiary: Bytes! # address
+  nextReleaseTime: BigInt!
+  timeInterval: BigInt!
+  amountPerTimeInterval: BigInt!
+  totalAmount: BigInt!
+  revocable: Boolean!
 }
