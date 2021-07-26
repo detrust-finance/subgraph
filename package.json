@@ -1,13 +1,13 @@
 {
-  "name": "firstsubgraph",
-  "license": "UNLICENSED",
+  "name": "detrust-subgraph",
+  "license": "MIT",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ firstsubgraph",
-    "create-local": "graph create --node http://localhost:8020/ firstsubgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ firstsubgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 firstsubgraph"
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ detrust-subgraph",
+    "create-local": "graph create --node http://localhost:8020/ detrust-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ detrust-subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 detrust-subgraph"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.21.1",
