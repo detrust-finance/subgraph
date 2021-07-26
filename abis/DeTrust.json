@@ -3,6 +3,25 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Release",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": false,
         "internalType": "string",
         "name": "name",
@@ -49,6 +68,12 @@
         "internalType": "uint256",
         "name": "totalAmount",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "revocable",
+        "type": "bool"
       }
     ],
     "name": "TrustAdded",
@@ -104,7 +129,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "totalAmount",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -112,70 +137,157 @@
     "type": "event"
   },
   {
+    "anonymous": false,
     "inputs": [
-      { "internalType": "string", "name": "name", "type": "string" },
-      { "internalType": "address", "name": "beneficiary", "type": "address" },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "trustId",
+        "type": "uint256"
+      }
+    ],
+    "name": "TrustRevoked",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "startReleaseTime",
         "type": "uint256"
       },
-      { "internalType": "uint256", "name": "timeInterval", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "timeInterval",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "amountPerTimeInterval",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "revocable",
+        "type": "bool"
       }
     ],
     "name": "addTrust",
     "outputs": [
-      { "internalType": "uint256", "name": "tId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "tId",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "payable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "name", "type": "string" },
-      { "internalType": "address", "name": "beneficiary", "type": "address" },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "startReleaseTime",
         "type": "uint256"
       },
-      { "internalType": "uint256", "name": "timeInterval", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "timeInterval",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "amountPerTimeInterval",
         "type": "uint256"
       },
-      { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "totalAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "revocable",
+        "type": "bool"
+      }
     ],
     "name": "addTrustFromBalance",
     "outputs": [
-      { "internalType": "uint256", "name": "tId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "tId",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
     "name": "getBalance",
     "outputs": [
-      { "internalType": "uint256", "name": "balance", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
     "name": "getTrustListAsBeneficiary",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "id", "type": "uint256" },
-          { "internalType": "string", "name": "name", "type": "string" },
-          { "internalType": "address", "name": "settlor", "type": "address" },
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "settlor",
+            "type": "address"
+          },
           {
             "internalType": "address",
             "name": "beneficiary",
@@ -200,6 +312,11 @@
             "internalType": "uint256",
             "name": "totalAmount",
             "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "revocable",
+            "type": "bool"
           }
         ],
         "internalType": "struct IDeTrust.Trust[]",
@@ -211,14 +328,32 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
     "name": "getTrustListAsSettlor",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "id", "type": "uint256" },
-          { "internalType": "string", "name": "name", "type": "string" },
-          { "internalType": "address", "name": "settlor", "type": "address" },
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "settlor",
+            "type": "address"
+          },
           {
             "internalType": "address",
             "name": "beneficiary",
@@ -243,6 +378,11 @@
             "internalType": "uint256",
             "name": "totalAmount",
             "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "revocable",
+            "type": "bool"
           }
         ],
         "internalType": "struct IDeTrust.Trust[]",
@@ -261,7 +401,13 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "tId", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tId",
+        "type": "uint256"
+      }
+    ],
     "name": "release",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -275,7 +421,13 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "to", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      }
+    ],
     "name": "releaseAllTo",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -283,8 +435,16 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "tId", "type": "uint256" },
-      { "internalType": "address", "name": "to", "type": "address" }
+      {
+        "internalType": "uint256",
+        "name": "tId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      }
     ],
     "name": "releaseTo",
     "outputs": [],
@@ -293,8 +453,29 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "to", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "tId",
+        "type": "uint256"
+      }
+    ],
+    "name": "revoke",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "sendBalanceTo",
     "outputs": [],
@@ -302,7 +483,26 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "tId", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tId",
+        "type": "uint256"
+      }
+    ],
+    "name": "setIrrevocable",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tId",
+        "type": "uint256"
+      }
+    ],
     "name": "topUp",
     "outputs": [],
     "stateMutability": "payable",
@@ -310,13 +510,24 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "tId", "type": "uint256" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "tId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "topUpFromBalance",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  { "stateMutability": "payable", "type": "receive" }
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  }
 ]

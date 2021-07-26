@@ -15,33 +15,25 @@ export function handleTrustAdded(event: TrustAdded): void {
   trust.settlor = event.params.settlor
   trust.beneficiary = event.params.beneficiary
   trust.nextReleaseTime = event.params.startReleaseTime
+  trust.timeInterval = event.params.timeInterval
+  trust.amountPerTimeInterval = event.params.amountPerTimeInterval
+  trust.totalAmount = event.params.totalAmount
+  trust.releasedAmount = BigInt.fromI32(0)
+  trust.revocable = event.params.revocable
 
-  // Entities can be written to the store with `.save()`
   trust.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.addTrustFromBalance(...)
-  // - contract.getBalance(...)
-  // - contract.getTrustListAsBeneficiary(...)
-  // - contract.getTrustListAsSettlor(...)
 }
 
 export function handleTrustFinished(event: TrustFinished): void {}
 
 export function handleTrustFundAdded(event: TrustFundAdded): void {}
 
-export function handleTrustReleased(event: TrustReleased): void {}
+export function handleTrustReleased(event: TrustReleased): void {
+  let trust = Trust.load(event.params.trustId.toHex())
+  if (trust == null) {
+    return
+  }
+  trust.releasedAmount = trust.releasedAmount + event.params.amount
+  
+  trust.save()
+}

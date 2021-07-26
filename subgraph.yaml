@@ -6,7 +6,7 @@ dataSources:
     name: DeTrust
     network: rinkeby
     source:
-      address: "0xCeB885d669098cB6b78e70E01Ff9FE7d831F53B3"
+      address: "0xc679e1c7F06ACf74baCfa42a35CbE53cbcE82660"
       abi: DeTrust
     mapping:
       kind: ethereum/events
@@ -21,7 +21,7 @@ dataSources:
         - name: DeTrust
           file: ./abis/DeTrust.json
       eventHandlers:
-        - event: TrustAdded(string,indexed address,indexed address,indexed uint256,uint256,uint256,uint256,uint256)
+        - event: TrustAdded(string,indexed address,indexed address,indexed uint256,uint256,uint256,uint256,uint256,bool)
           handler: handleTrustAdded
         - event: TrustFinished(indexed uint256)
           handler: handleTrustFinished
