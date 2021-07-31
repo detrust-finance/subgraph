@@ -18,6 +18,7 @@ export function handleTrustAdded(event: TrustAdded): void {
   trust.timeInterval = event.params.timeInterval
   trust.amountPerTimeInterval = event.params.amountPerTimeInterval
   trust.totalAmount = event.params.totalAmount
+  trust.cumAmount = event.params.totalAmount
   trust.releasedAmount = BigInt.fromI32(0)
   trust.revocable = event.params.revocable
 
@@ -32,6 +33,7 @@ export function handleTrustFundAdded(event: TrustFundAdded): void {
     return
   }
   trust.totalAmount = trust.totalAmount + event.params.amount
+  trust.cumAmount = trust.cumAmount + event.params.amount
 
   trust.save()
 }
