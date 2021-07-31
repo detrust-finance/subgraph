@@ -15,6 +15,7 @@ dataSources:
       entities:
         - TrustAdded
         - TrustFinished
+        - TrustRevoked
         - TrustFundAdded
         - TrustReleased
       abis:
@@ -25,6 +26,8 @@ dataSources:
           handler: handleTrustAdded
         - event: TrustFinished(indexed uint256)
           handler: handleTrustFinished
+        - event: TrustRevoked(indexed uint256)
+          handler: handleTrustRevoked
         - event: TrustFundAdded(indexed uint256,uint256)
           handler: handleTrustFundAdded
         - event: TrustReleased(indexed uint256,indexed address,uint256)

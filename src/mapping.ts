@@ -1,10 +1,11 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, store } from "@graphprotocol/graph-ts"
 import {
   DeTrust,
   TrustAdded,
   TrustFinished,
+  TrustRevoked,
   TrustFundAdded,
-  TrustReleased
+  TrustReleased,
 } from "../generated/DeTrust/DeTrust"
 import { Trust } from "../generated/schema"
 
@@ -25,15 +26,21 @@ export function handleTrustAdded(event: TrustAdded): void {
   trust.save()
 }
 
-//export function handleTrustFinished(event: TrustFinished): void {}
+export function handleTrustFinished(event: TrustFinished): void {
+  store.remove('Trust', event.params.trustId.toHex())
+}
+
+export function handleTrustRevoked(event: TrustRevoked): void {
+  store.remove('Trust', event.params.trustId.toHex())
+}
 
 export function handleTrustFundAdded(event: TrustFundAdded): void {
   let trust = Trust.load(event.params.trustId.toHex())
   if (trust == null) {
     return
   }
-  trust.totalAmount = trust.totalAmount + event.params.amount
-  trust.cumAmount = trust.cumAmount + event.params.amount
+  trust.totalAmount = trust.totalAmount.plus(event.params.amount)
+  trust.cumAmount = trust.cumAmount.plus(event.params.amount)
 
   trust.save()
 }
@@ -43,8 +50,21 @@ export function handleTrustReleased(event: TrustReleased): void {
   if (trust == null) {
     return
   }
-  trust.releasedAmount = trust.releasedAmount + event.params.amount
-  trust.totalAmount = trust.totalAmount - event.params.amount
-  
+  trust.releasedAmount = trust.releasedAmount.plus(event.params.amount)
+  trust.totalAmount = trust.totalAmount.minus(event.params.amount)
+  if (trust.totalAmount.gt(BigInt.fromI32(0))) {
+    trust.nextReleaseTime = trust.nextReleaseTime.plus(
+      event.block.timestamp.minus(
+        trust.nextReleaseTime
+      ).div(
+        trust.timeInterval
+      ).plus(
+        BigInt.fromI32(1)
+      ).times(
+        trust.timeInterval
+      )
+    )
+  }
+
   trust.save()
 }
