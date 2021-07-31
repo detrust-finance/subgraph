@@ -24,9 +24,17 @@ export function handleTrustAdded(event: TrustAdded): void {
   trust.save()
 }
 
-export function handleTrustFinished(event: TrustFinished): void {}
+//export function handleTrustFinished(event: TrustFinished): void {}
 
-export function handleTrustFundAdded(event: TrustFundAdded): void {}
+export function handleTrustFundAdded(event: TrustFundAdded): void {
+  let trust = Trust.load(event.params.trustId.toHex())
+  if (trust == null) {
+    return
+  }
+  trust.totalAmount = trust.totalAmount + event.params.amount
+
+  trust.save()
+}
 
 export function handleTrustReleased(event: TrustReleased): void {
   let trust = Trust.load(event.params.trustId.toHex())
@@ -34,6 +42,7 @@ export function handleTrustReleased(event: TrustReleased): void {
     return
   }
   trust.releasedAmount = trust.releasedAmount + event.params.amount
+  trust.totalAmount = trust.totalAmount - event.params.amount
   
   trust.save()
 }
