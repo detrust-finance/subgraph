@@ -52,19 +52,20 @@ export function handleTrustReleased(event: TrustReleased): void {
   }
   trust.releasedAmount = trust.releasedAmount.plus(event.params.amount)
   trust.totalAmount = trust.totalAmount.minus(event.params.amount)
-  if (trust.totalAmount.gt(BigInt.fromI32(0))) {
-    trust.nextReleaseTime = trust.nextReleaseTime.plus(
-      event.block.timestamp.minus(
-        trust.nextReleaseTime
-      ).div(
-        trust.timeInterval
-      ).plus(
-        BigInt.fromI32(1)
-      ).times(
-        trust.timeInterval
-      )
-    )
-  }
+  // if (trust.totalAmount.gt(BigInt.fromI32(0))) {
+  //   trust.nextReleaseTime = trust.nextReleaseTime.plus(
+  //     event.block.timestamp.minus(
+  //       trust.nextReleaseTime
+  //     ).div(
+  //       trust.timeInterval
+  //     ).plus(
+  //       BigInt.fromI32(1)
+  //     ).times(
+  //       trust.timeInterval
+  //     )
+  //   )
+  // }
+  trust.nextReleaseTime = event.params.nextReleaseTime
 
   trust.save()
 }

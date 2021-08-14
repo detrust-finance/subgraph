@@ -30,6 +30,6 @@ dataSources:
           handler: handleTrustRevoked
         - event: TrustFundAdded(indexed uint256,uint256)
           handler: handleTrustFundAdded
-        - event: TrustReleased(indexed uint256,indexed address,uint256)
+        - event: TrustReleased(indexed uint256,indexed address,uint256,uint256)
           handler: handleTrustReleased
       file: ./src/mapping.ts
