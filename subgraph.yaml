@@ -6,7 +6,7 @@ dataSources:
     name: DeTrust
     network: rinkeby
     source:
-      address: "0xc679e1c7F06ACf74baCfa42a35CbE53cbcE82660"
+      address: "0xc18D73D13B5d03d28a5748ECb060DEB631902B91"
       abi: DeTrust
     mapping:
       kind: ethereum/events
