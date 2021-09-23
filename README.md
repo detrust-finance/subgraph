@@ -3,28 +3,33 @@ Subgraph of DeTrust
 
 ## Deploy to Subgraph Studio
 
-### Install graph-cli
+### Install tools: graph-cli, etc
 
   ```
-    npm install -g @graphprotocol/graph-cli
+    npm install
   ```
 
 ### Initialize your Subgraph
 
   ```
-    graph init --studio <SUBGRAPH_SLUG>
+    npx graph init --studio <SUBGRAPH_SLUG>
   ```
 
 ### Graph Auth
 
   ```
-    graph auth --studio <DEPLOY KEY>
+    npx graph auth --studio <DEPLOY KEY>
+  ```
+
+### Build
+  ```
+    npx graph codegen && npx graph build
   ```
 
 ### Deploying a Subgraph to Subgraph Studio
 
   ```
-    graph deploy --studio <SUBGRAPH_SLUG>
+    npx graph deploy --studio <SUBGRAPH_SLUG>
   ```
 
 ## References
