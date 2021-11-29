@@ -32,4 +32,7 @@ dataSources:
           handler: handleTrustFundAdded
         - event: TrustReleased(indexed uint256,indexed address,uint256,uint256)
           handler: handleTrustReleased
+      callHandlers:
+        - function: setIrrevocable(uint256)
+          handler: handleSetIrrevocable
       file: ./src/mapping.ts

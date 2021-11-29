@@ -6,6 +6,7 @@ import {
   TrustRevoked,
   TrustFundAdded,
   TrustReleased,
+  SetIrrevocableCall
 } from "../generated/DeTrust/DeTrust"
 import { Trust } from "../generated/schema"
 
@@ -66,6 +67,16 @@ export function handleTrustReleased(event: TrustReleased): void {
   //   )
   // }
   trust.nextReleaseTime = event.params.nextReleaseTime
+
+  trust.save()
+}
+
+export function handleSetIrrevocable(call: SetIrrevocableCall): void {
+  let trust = Trust.load(call.inputs.tId.toHex())
+  if (trust == null) {
+    return
+  }
+  trust.revocable = false
 
   trust.save()
 }
