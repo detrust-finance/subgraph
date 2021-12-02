@@ -4,10 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: DeTrust
-    network: mainnet
+    network: ropsten
     source:
-      address: "0x1060f5077d75D4D71e50E9080AF8b238143f2F5f"
+      address: "0x57958dC0d306c947Dc91785f944C5e0fc8698214"
       abi: DeTrust
+      startBlock: 11520737
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
