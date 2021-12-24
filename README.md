@@ -18,7 +18,21 @@ Subgraph of DeTrust
 ### Graph Auth
 
   ```
-    npx graph auth --studio <DEPLOY KEY>
+    npx graph auth --studio <DEPLOY_KEY>
+  ```
+
+### Create subgraph.yaml according to network
+
+* For mainnet:
+
+  ```
+    npm run prepare:mainnet
+  ```
+
+* For ropsten:
+
+  ```
+    npm run prepare:ropsten
   ```
 
 ### Build

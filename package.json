@@ -7,7 +7,9 @@
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ detrust-subgraph",
     "create-local": "graph create --node http://localhost:8020/ detrust-subgraph",
     "remove-local": "graph remove --node http://localhost:8020/ detrust-subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 detrust-subgraph"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 detrust-subgraph",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.yaml.mustache > subgraph.yaml",
+    "prepare:ropsten": "mustache config/ropsten.json subgraph.yaml.mustache > subgraph.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.21.1",
@@ -18,7 +20,7 @@
     "ecc-jsbn": "^0.1.2",
     "extsprintf": "^1.3.0",
     "getpass": "^0.1.7",
-    "json-schema": "^0.2.3",
+    "json-schema": "^0.4.0",
     "jsprim": "^1.4.1",
     "psl": "^1.8.0",
     "rimraf": "^3.0.2",
@@ -26,5 +28,8 @@
     "tmp": "^0.2.1",
     "tweetnacl": "^0.14.5",
     "verror": "^1.10.0"
+  },
+  "devDependencies": {
+    "mustache": "^4.2.0"
   }
 }
